@@ -1,0 +1,27 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.example/tidy-server",
+  "description": "A well-formed MCP server with a pinned package and documented secrets.",
+  "version": "1.2.0",
+  "repository": {
+    "url": "https://github.com/example/tidy-server",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "tidy-server",
+      "version": "1.2.0",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "API_TOKEN",
+          "description": "Read-only API token scoped to the reporting endpoint.",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}
