@@ -27,6 +27,7 @@ mcp-risk-scan ./server.json                 # scan a local manifest
 mcp-risk-scan https://example.com/server.json   # scan a remote manifest
 mcp-risk-scan ./server.json --gate medium   # fail on medium+ findings
 mcp-risk-scan ./server.json --json          # machine-readable report
+mcp-risk-scan fixtures/xquik.remote.server.json  # hosted remote with an auth header
 ```
 
 Exit codes: `0` pass · `1` findings at or above the gate · `2` usage/IO error. Default gate is `high`, so the scanner fails CI only on high/critical risks unless you tighten it.
