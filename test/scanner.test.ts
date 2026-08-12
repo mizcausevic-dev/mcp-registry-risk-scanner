@@ -37,6 +37,33 @@ describe("clean manifest", () => {
   });
 });
 
+describe("hosted remote manifest", () => {
+  const m = fixture("xquik.remote.server.json");
+  const report = scanManifest(m);
+  const ids = ruleIds(m);
+
+  it("flags the remote data-egress and secret-header risks", () => {
+    expect(report.ok).toBe(false);
+    expect(report.worst).toBe("high");
+    expect(ids.has("remote-endpoint")).toBe(true);
+    expect(ids.has("remote-secret-header")).toBe(true);
+  });
+
+  it("does not flag source, schema, installability, or transport issues", () => {
+    expect(ids.has("missing-repository")).toBe(false);
+    expect(ids.has("missing-schema")).toBe(false);
+    expect(ids.has("no-packages-or-remotes")).toBe(false);
+    expect(ids.has("insecure-transport")).toBe(false);
+  });
+
+  it("keeps hosted remote findings scoped to one high and one medium", () => {
+    expect(report.counts.high).toBe(1);
+    expect(report.counts.medium).toBe(1);
+    expect(report.counts.low).toBe(0);
+    expect(report.counts.info).toBe(0);
+  });
+});
+
 describe("risky manifest", () => {
   const m = fixture("risky.server.json");
   const report = scanManifest(m);
